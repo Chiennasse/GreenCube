@@ -1,0 +1,75 @@
+<resources>
+    <string name="app_name">GreenCube</string>
+    <string name="butt_telecharger">Télécharger les données</string>
+    <string name="titleItemPref">Préférences</string>
+    <string name="titileWifi">Wi-Fi</string>
+    <string name="titleTelechargement">Fichiers</string>
+
+
+    <string name="PrefsTitle">Préférences</string>
+
+    <string name="GreenCubeSSIDSummary">Entrez le SSID du GreenCube</string>
+    <string name="GreenCubePasswordSummary">Entrer le mot de passe du réseau GreenCube</string>
+    <string name="GreenCubeSSID">Identifiant réseau GreenCube</string>
+    <string name="GreenCubePassword">Mot de passe réseau GreenCube</string>
+
+    <string name="ServeurSSIDSummary">Entrez l\'adresse IP du serveur FTP</string>
+    <string name="ServerPasswordSummary">Entrez le mot de passe du serveur FTP</string>
+    <string name="ServeurSSID">Serveur FTP</string>
+    <string name="ServeurPassword">Mot de passe serveur FTP</string>
+
+    <string name="Téléchargement">Téléchargement</string>
+    <string name="ConnectionWiFi">Wi-Fi</string>
+    <string name="Preference">Préférences</string>
+
+    <string name="ParamWifi">Paramètres transfert</string>
+    <string name="ParamWifiSummary">Choissisez les paramètres de transfert automatique</string>
+
+    <string name="ParamLTE">Paramètre LTE</string>
+    <string name="ParamLTESummary">Activez ou désactivez le transfert via données mobiles</string>
+
+    <string name="Langue">Langue</string>
+    <string name="LangueSummary">Changer le langage de l\'application</string>
+
+    <string-array name="NomLangue">
+        <item>Français</item>
+        <item>Anglais</item>
+    </string-array>
+
+    <string-array name="ValeurLangue">
+        <item>fr</item>
+        <item>en</item>
+    </string-array>
+
+    <string-array name="ValeurSettingWifi">
+        <item>Transfére les données automatiquement en tout temps (Des frais de données peuvent s\'appliquer).</item>
+        <item>Transfére les données automatiquement (uniquement lorsque l\'appareil est connecté à un réseau Wi-Fi).</item>
+        <item>Ne pas transférer les données automatiquement. L\'utilisateur devra procédé au transfert manuellement.</item>
+    </string-array>
+
+    <string-array name="NomSettingWifi">
+        <item>Transfére les données automatiquement</item>
+        <item>Transfére les données automatiquement (Wi-Fi)</item>
+        <item>Ne pas transferer les données automatiquement</item>
+    </string-array>
+
+    <string-array name="AutoriserLTE">
+        <item>Autoriser le transfert par LTE</item>
+        <item>Ne pas autoriser le transfert par LTE</item>
+    </string-array>
+
+    <string-array name="ValeurAutoriserLTE">
+        <item>Autoriser le transfert par LTE</item>
+        <item>Ne pas autoriser le transfert par LTE</item>
+    </string-array>
+
+
+    <string name="ConxGreenCube">Connexion au réseau du GreenCube...</string>
+    <string name="downloadFTP">Téléchargement du fichier... </string>
+    <string name="ConxFTP">Connexion au serveur FTP...</string>
+    <string name="ConxWifi">État du Wi-Fi...</string>
+    <string name="nomReseau">SSID...</string>
+
+    <string name="AcceuilTrue"> OK !</string>
+    <string name="AcceuilFalse"> Fail !</string>
+</resources>

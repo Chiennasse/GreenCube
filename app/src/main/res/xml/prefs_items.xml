@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/GreenCubeSSID"
+        android:key="username"
+        android:summary="@string/GreenCubeSSIDSummary" />
+
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/GreenCubePassword"
+        android:inputType="textPassword"
+        android:key="password"
+        android:summary="@string/GreenCubePasswordSummary" />
+
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/ServeurSSID"
+        android:key="password"
+        android:summary="@string/ServeurSSIDSummary" />
+
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/ServeurPassword"
+        android:inputType="textPassword"
+        android:key="password"
+        android:summary="@string/ServerPasswordSummary" />
+
+    <ListPreference
+        android:entries="@array/NomSettingWifi"
+        android:entryValues="@array/ValeurSettingWifi"
+        android:defaultValue="30"
+        android:title="@string/ParamWifi"
+        android:key="delay"
+        android:summary="@string/ParamWifiSummary" />
+
+    <ListPreference
+        android:entries="@array/AutoriserLTE"
+        android:entryValues="@array/ValeurAutoriserLTE"
+        android:defaultValue="30"
+        android:title="@string/ParamLTE"
+        android:key="delay"
+        android:summary="@string/ParamLTESummary" />
+
+
+    <ListPreference
+        android:entries="@array/NomLangue"
+        android:entryValues="@array/ValeurLangue"
+        android:defaultValue="30"
+        android:title="@string/Langue"
+        android:key="delay"
+        android:summary="@string/LangueSummary" />
+
+</PreferenceScreen>

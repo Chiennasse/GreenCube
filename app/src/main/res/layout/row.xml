@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/bt_delete"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="54dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/poubelle3" />
+
+    <Button
+        android:id="@+id/bt_envoyer"
+        android:layout_width="49dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/bt_delete"
+        android:background="@drawable/email3" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nom_telechargement"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:id="@+id/CB_auto"
+        android:layout_width="51dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/bt_envoyer"
+        android:layout_alignBottom="@+id/bt_envoyer"
+        android:layout_marginBottom="8dp"
+        android:layout_toLeftOf="@+id/bt_envoyer"
+        android:layout_toStartOf="@+id/bt_envoyer"
+        android:clickable="false" />
+</RelativeLayout>
