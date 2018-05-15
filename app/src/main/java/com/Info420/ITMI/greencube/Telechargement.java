@@ -1,12 +1,14 @@
-package com.blazeit.lebw.greencube;
+package com.Info420.ITMI.greencube;
 //TODO - changer le nom du package
 
 //TODO - commenter l'ensemble du fichier
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -50,7 +52,10 @@ import javax.mail.internet.MimeMultipart;
 
 public class Telechargement extends AppCompatActivity
 {
+    //TODO - enlever une fois les logs supprimés
     private final static String TAG = "Téléchargement";
+
+    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -64,6 +69,8 @@ public class Telechargement extends AppCompatActivity
 
         myToolbar.setTitle(R.string.PrefsTitle);
         myToolbar.setTitleTextColor(Color.WHITE);
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         File[] fichiers = getFilesDir().listFiles();
 
@@ -92,6 +99,18 @@ public class Telechargement extends AppCompatActivity
         }
     }
 
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+    }
+
     private class Nom_Fichier
     {
         public String fichier;
@@ -109,7 +128,7 @@ public class Telechargement extends AppCompatActivity
     private class Fichier_Adapteur extends ArrayAdapter<Nom_Fichier>
     {
         //TODO - changer le path + mettre en variable global
-        static final String pathLocal = "/data/data/com.blazeit.lebw.greencube/files/";
+        static final String pathLocal = "/data/data/com.Info420.ITMI.greencube/files/";
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent)
@@ -122,7 +141,6 @@ public class Telechargement extends AppCompatActivity
             }
 
             final TextView txt_fichier = (TextView) convertView.findViewById(R.id.nom_telechargement);
-            final CheckBox cb_auto = (CheckBox) convertView.findViewById(R.id.CB_auto);
 
             txt_fichier.setText(nom_fichier.fichier);
 
@@ -134,8 +152,9 @@ public class Telechargement extends AppCompatActivity
                 @Override
                 public void onClick(View view)
                 {
-                    final String username = "boudreault758@gmail.com";
-                    final String password = "12maze12";
+                    final String username = prefs.getString("sourceUsername", "");
+                    final String password = prefs.getString("sourcePassword", "");
+                    final String usernameDest = prefs.getString("destinationUsername", "");
 
                     new Thread()
                     {
@@ -159,7 +178,7 @@ public class Telechargement extends AppCompatActivity
                             try
                             {
                                 Message message = new MimeMessage(session);
-                                message.setRecipient(Message.RecipientType.TO, new InternetAddress("testitmi2@gmail.com"));
+                                message.setRecipient(Message.RecipientType.TO, new InternetAddress(usernameDest));
                                 message.setSubject("Transfert des données du GreenCube fichier : " + txt_fichier.getText());
 
                                 MimeBodyPart messageBodyPart = new MimeBodyPart();
@@ -227,8 +246,6 @@ public class Telechargement extends AppCompatActivity
                             }
                         }
                     }.start();
-
-                    cb_auto.setChecked(true);
                 }
             });
 

@@ -1,15 +1,18 @@
-package com.blazeit.lebw.greencube;
+package com.Info420.ITMI.greencube;
 // TODO : changer la package de l'appli
 
 //TODO - Faire l'en-tête de fichier
 
 //TODO - Commenter l'ensemble du fichier
 
+//TODO - changer icones fichier
 
 //TODO - Faire l'envoie automatique
 
 //TODO - Changer la détection de wi-fi dans le OnCreate, ne s'actualise pas pendant le changement lorsque qu'on est dans l'application
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -18,14 +21,18 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -94,6 +101,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     SharedPreferences prefs;
 
+    private boolean modeAdmin = false;
+    private static final String passwordPrefs = "adminPrefs";
+
     @Override
     protected void onStart()
     {
@@ -101,6 +111,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         IntentFilter intentFilter = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
         intentFilter.addAction(WifiManager.SUPPLICANT_CONNECTION_CHANGE_ACTION);
         registerReceiver(WifiStateChangedReceiver, intentFilter);
+    }
+
+    //TODO - Comprendre
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
     }
 
     @Override
@@ -130,8 +159,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         @Override
                         public void run()
                         {
-
-
                             //Affiche l'état de connexion à l'écran en vert
                             TextView wifiState = (TextView)findViewById(R.id.wifiState);
                             wifiState.setText("actif");
@@ -209,6 +236,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Log.d(TAG, "LTE");
 
                             //TODO - envoie automatique (si réglages LTE) ET régler déjà envoyer afin de ne pas envoyer plusieurs fois le fichier
+
+                            //TODO - traduire les toast
 
                             //Désactive le bouton
                             buttonDownload.setEnabled(false);
@@ -306,7 +335,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         {
             public void run()
             {
-                final String filename = "test.csv";
+
+                final String adresse = prefs.getString("adresse", "");
+                final String username = prefs.getString("username", "");
+                final String password = prefs.getString("password", "");
+                final String filename = prefs.getString("filename", "");
+                final String Path = prefs.getString("filepath", "");
 
                 BufferedInputStream buffIn;
 
@@ -317,16 +351,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 try
                 {
-                    String server = "192.168.1.2";
 
                     //Connexion au server ftp avec le port 21
-                    ftp.connect(server, 21);
+                    ftp.connect(adresse, 21);
 
                     //TODO - à supprimer
-                    Log.d(TAG, "Connected to " + server + ".");
+                    Log.d(TAG, "Connected to " + adresse + ".");
 
                     //Login au serveur avec le mot de passe et le nom d'utilisateur
-                    ftp.login("administrateur", "Ubuntu2018");
+                    ftp.login(username, password);
 
                     runOnUiThread(new Runnable()
                     {
@@ -400,7 +433,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 toast.show();
                             }
                         });
-
                     }
                     //Logout du ftp
                     ftp.logout();
@@ -426,7 +458,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 catch (IOException e)
                 {
                     //TODO - gèrer l'erreur de téléchargement de fichier + supprimer LOG
-                    Log.d(TAG,"Sa marche pas tbnk 2");
+                    Log.d(TAG,"IOException");
                     e.printStackTrace();
                 }
             }
@@ -445,14 +477,63 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        Intent intentPrefsActivity = new Intent(this, PrefsActivity.class);
+        final Intent intentPrefsActivity = new Intent(this, PrefsActivity.class);
         Intent intentTelechargementActivity = new Intent(this, Telechargement.class);
 
         switch (item.getItemId())
         {
             case R.id.itemPreference:
-                startActivity(intentPrefsActivity);
+                if (modeAdmin == false)
+                {
+                    View view = (LayoutInflater.from(MainActivity.this)).inflate(R.layout.user_input, null);
+
+                    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this).setMessage("Saisissez le mot de passe:");
+                    alertBuilder.setView(view);
+                    final EditText userInput = (EditText) view.findViewById(R.id.userinput);
+                    userInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
+                    alertBuilder.setCancelable(true)
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    String saisie = (userInput.getText().toString());
+                                    Log.d(TAG, saisie);
+                                    Log.d(TAG, passwordPrefs);
+                                    if (saisie.equals(passwordPrefs))
+                                    {
+                                        modeAdmin = true;
+                                        startActivity(intentPrefsActivity);
+                                    }
+                                    else
+                                    {
+                                        runOnUiThread(new Runnable()
+                                        {
+                                            @Override
+                                            public void run()
+                                            {
+                                                // TODO - changer l'ensemble des toast pour celui-ci
+                                                // TODO - Source : https://stackoverflow.com/questions/7331793/android-java-using-a-string-resource-in-a-toast
+                                                Toast toast = Toast.makeText(getApplicationContext(),
+                                                        getApplicationContext().getString(R.string.MauvaisMDP), Toast.LENGTH_SHORT);
+                                                toast.show();
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+
+                    Dialog dialog = alertBuilder.create();
+                    dialog.show();
+                }
+
+                if (modeAdmin == true)
+                {
+                    startActivity(intentPrefsActivity);
+                }
+
                 return true;
+
 
             case R.id.itemTelechargement:
                 startActivity(intentTelechargementActivity);
@@ -463,12 +544,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void envoieAutomatique(File file)
+    private void envoieAutomatique(File tempo)
     {
         //TODO - mettre les infos en préférences
-        final String username = "boudreault758@gmail.com";
-        final String password = "12maze12";
-        final String fileName = file.getName();
+        final String adresse = prefs.getString("adresse", "");
+        final String username = prefs.getString("username", "");
+        final String password = prefs.getString("password", "");
+        final String filename = prefs.getString("filename", "");
+        final String Path = prefs.getString("filepath", "");
+        final String file = tempo.getName();
 
         new Thread()
         {
@@ -481,13 +565,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 props.put("mail.smtp.host", "smtp.gmail.com");
                 props.put("mail.smtp.port", "587");
 
-
-
                 Session session = Session.getInstance(props, new Authenticator()
                 {
                     protected PasswordAuthentication getPasswordAuthentication()
                     {
-                        return new PasswordAuthentication("maxyme.chiasson@gmail.com", "fuckyou1234");
+                        return new PasswordAuthentication("boudreault758@gmail.com", "12maze12");
+
+                        //return new PasswordAuthentication(username, password);
                     }
                 });
 
@@ -495,19 +579,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 {
                     Message message = new MimeMessage(session);
                     message.setRecipient(Message.RecipientType.TO, new InternetAddress("testitmi2@gmail.com")); //TODO - mettre l'adresse en préférence
-                    message.setSubject("Transfert des données du GreenCube fichier : " + fileName);
+                    message.setSubject("Transfert des données du GreenCube fichier : " + filename);
 
                     MimeBodyPart messageBodyPart = new MimeBodyPart();
                     Multipart multipart = new MimeMultipart();
 
-                    File fichier = new File(getFilesDir(), fileName);
-                    File fichierNouveau = new File(getFilesDir(), fileName.substring(0, fileName.length() - 1));
+                    File fichier = new File(getFilesDir(), file);
+                    File fichierNouveau = new File(getFilesDir(), file.substring(0, file.length() - 1));
 
                     fichier.renameTo(fichierNouveau);
 
+                    // TODO - problème avec le path des préférences (default value)
                     //String file = getFilesDir() + "/" + fileName;
-                    String file = "/data/data/com.blazeit.lebw.greencube/files/" + fileName;
-                    String attachement = fileName +".csv";
+                    String file = "/data/data/com.Info420.ITMI.greencube/files/" + fichierNouveau.getName();
+                    String attachement = fichierNouveau.getName() +".csv";
 
                     FileDataSource source = new FileDataSource(file);
                     messageBodyPart.setDataHandler(new DataHandler(source));
@@ -520,9 +605,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     //TODO : changer l'adresse affichée dans le toast
 
-                    Toast mailOK = Toast.makeText(getApplicationContext(),
-                            "Courriel envoyé à GIROUX avec succès !", Toast.LENGTH_SHORT);
-                    mailOK.show();
+//                    Toast mailOK = Toast.makeText(getApplicationContext(),
+//                            "Courriel envoyé à GIROUX avec succès !", Toast.LENGTH_SHORT);
+//                    mailOK.show();
                 }
 
                 catch(MessagingException e)

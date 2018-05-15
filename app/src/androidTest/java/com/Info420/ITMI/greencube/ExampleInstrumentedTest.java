@@ -1,4 +1,4 @@
-package com.blazeit.lebw.greencube;
+package com.Info420.ITMI.greencube;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

@@ -1,8 +1,10 @@
-package com.blazeit.lebw.greencube;
+package com.Info420.ITMI.greencube;
 
 //TODO - changer le nom du package
 
 //TODO - commenter l'ensemble du fichier
+
+//TODO - À l'entrer du mot de passe des préférences, faire apparaître le clavier automatiquement + envoyer le mot de passe lorsque l'usager appuie sur OK de son clavier.
 
 import android.graphics.Color;
 import android.os.Bundle;

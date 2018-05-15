@@ -13,17 +13,8 @@
         android:defaultValue="Default value"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="@string/GreenCubePassword"
-        android:inputType="textPassword"
-        android:key="password"
-        android:summary="@string/GreenCubePasswordSummary" />
-
-    <EditTextPreference
-        android:defaultValue="Default value"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
         android:title="@string/ServeurSSID"
-        android:key="password"
+        android:key="adresse"
         android:summary="@string/ServeurSSIDSummary" />
 
     <EditTextPreference
@@ -35,6 +26,41 @@
         android:key="password"
         android:summary="@string/ServerPasswordSummary" />
 
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/CourrielSourceUsername"
+        android:key="sourceUsername"
+        android:summary="@string/CourrielSourceUsernameSummary" />
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/CourrielSourcePassword"
+        android:key="sourcePassword"
+        android:summary="@string/CourrielSourcePasswordSummary" />
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/CourrielDestinationUsername"
+        android:key="destinationUsername"
+        android:summary="@string/CourrielDestinationUsernameSummary" />
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/NomFichier"
+        android:key="filename"
+        android:summary="@string/NomFichierSummary" />
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/CheminFichier"
+        android:key="filepath"
+        android:summary="@string/CheminFichierSummary" />
     <ListPreference
         android:entries="@array/NomSettingWifi"
         android:entryValues="@array/ValeurSettingWifi"
@@ -50,14 +76,5 @@
         android:title="@string/ParamLTE"
         android:key="delay"
         android:summary="@string/ParamLTESummary" />
-
-
-    <ListPreference
-        android:entries="@array/NomLangue"
-        android:entryValues="@array/ValeurLangue"
-        android:defaultValue="30"
-        android:title="@string/Langue"
-        android:key="delay"
-        android:summary="@string/LangueSummary" />
 
 </PreferenceScreen>

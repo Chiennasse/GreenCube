@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "27.0.3"
     defaultConfig {
-        applicationId "com.blazeit.lebw.greencube"
+        applicationId "com.Info420.ITMI.greencube"
         minSdkVersion 14
         targetSdkVersion 25
         versionCode 1
