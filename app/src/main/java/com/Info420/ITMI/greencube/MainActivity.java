@@ -336,7 +336,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void run()
             {
 
-                final String adresse = prefs.getString("adresse", "");
+                final String adresse = prefs.getString("adresse", "Green Cube 2.4GHz");
                 final String username = prefs.getString("username", "");
                 final String password = prefs.getString("password", "");
                 final String filename = prefs.getString("filename", "");

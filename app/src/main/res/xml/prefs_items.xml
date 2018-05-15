@@ -18,7 +18,7 @@
         android:summary="@string/ServeurSSIDSummary" />
 
     <EditTextPreference
-        android:defaultValue="android123"
+        android:defaultValue="Ubuntu2018"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/ServeurPassword"
@@ -42,21 +42,21 @@
         android:key="sourcePassword"
         android:summary="@string/CourrielSourcePasswordSummary" />
     <EditTextPreference
-        android:defaultValue="Default value"
+        android:defaultValue="testitmi2@gmail.com"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/CourrielDestinationUsername"
         android:key="destinationUsername"
         android:summary="@string/CourrielDestinationUsernameSummary" />
     <EditTextPreference
-        android:defaultValue="Default value"
+        android:defaultValue="test.csv"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/NomFichier"
         android:key="filename"
         android:summary="@string/NomFichierSummary" />
     <EditTextPreference
-        android:defaultValue="Default value"
+        android:defaultValue="/home/"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/CheminFichier"
