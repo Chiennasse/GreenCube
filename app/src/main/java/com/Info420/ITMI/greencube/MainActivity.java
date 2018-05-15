@@ -503,6 +503,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     if (saisie.equals(passwordPrefs))
                                     {
                                         modeAdmin = true;
+
+                                        runOnUiThread(new Runnable()
+                                        {
+                                            @Override
+                                            public void run()
+                                            {
+                                                // TODO - changer l'ensemble des toast pour celui-ci
+                                                // TODO - Source : https://stackoverflow.com/questions/7331793/android-java-using-a-string-resource-in-a-toast
+                                                Toast toast = Toast.makeText(getApplicationContext(),
+                                                        getApplicationContext().getString(R.string.BonMDP), Toast.LENGTH_SHORT);
+                                                toast.show();
+                                            }
+                                        });
+
                                         startActivity(intentPrefsActivity);
                                     }
                                     else

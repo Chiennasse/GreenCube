@@ -74,4 +74,5 @@
     <string name="AcceuilFalse">Fail !</string>
 
     <string name="MauvaisMDP">Erreur ! Mauvais mot de passe.</string>
+    <string name="BonMDP">Mode administrateur activé !</string>
 </resources>
