@@ -492,6 +492,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     final EditText userInput = (EditText) view.findViewById(R.id.userinput);
                     userInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
+                    // TODO : https://stackoverflow.com/questions/5105354/how-to-show-soft-keyboard-when-edittext-is-focused
+
                     alertBuilder.setCancelable(true)
                             .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 
