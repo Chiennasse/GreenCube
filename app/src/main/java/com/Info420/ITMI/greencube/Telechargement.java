@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -93,7 +94,7 @@ public class Telechargement extends AppCompatActivity
                     tempo = tempo.substring(0, tempo.length() - 1);
                 }
 
-                Nom_Fichier fichier = new Nom_Fichier(fichiers[i].getName());
+                Nom_Fichier fichier = new Nom_Fichier(tempo);
                 adaptateur.add(fichier);
             }
         }
@@ -141,8 +142,19 @@ public class Telechargement extends AppCompatActivity
             }
 
             final TextView txt_fichier = (TextView) convertView.findViewById(R.id.nom_telechargement);
+            final TextView txt_envoie = (TextView) convertView.findViewById(R.id.envoieView);
 
             txt_fichier.setText(nom_fichier.fichier);
+
+            if(nom_fichier.compteur > 0)
+            {
+                txt_envoie.setText("Envoyé");
+                //TODO - MEttre dans string.xml
+            }
+            else
+            {
+                txt_envoie.setText("Non-Envoyé");
+            }
 
             Button bouton_email = (Button) convertView.findViewById(R.id.bt_envoyer);
             Button bouton_supprimer = (Button) convertView.findViewById(R.id.bt_delete);
@@ -229,9 +241,6 @@ public class Telechargement extends AppCompatActivity
 
                             catch(MessagingException e)
                             {
-                                //TODO - supprimer le log
-                                Log.d(TAG,"Sa marche pas tbnk");
-
                                 runOnUiThread(new Runnable()
                                 {
                                     @Override

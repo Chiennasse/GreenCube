@@ -180,12 +180,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 TextView nomssid = (TextView)findViewById(R.id.nomSSID);
                                 nomssid.setText(wifiName);
                                 nomssid.setTextColor(Color.WHITE);
-                                //TODO - enlever l'affichage du SSID lors d'une déconnexion
                             }
                         });
 
-                        //TODO - mettre le nom du réseau en préférence
-                        if (wifiName.equals('"' + "Green Cube 2.4GHz" + '"'))
+                        if (wifiName.equals('"' + prefs.getString("SSID", "") + '"'))
                         {
                             //Active le bouton
                             buttonDownload.setEnabled(true);
@@ -201,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             for(int i = 0; i < fichiers.length; i++)
                             {
-                                if(i != 0)
+                                if(i != 0 && fichiers[i].getName().charAt(fichiers[i].getName().length() -1) == 'u')
                                 {
                                     envoieAutomatique(fichiers[i]);
                                 }
@@ -232,8 +230,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         @Override
                         public void run()
                         {
-                            //TODO - à supprimer
-                            Log.d(TAG, "LTE");
 
                             //TODO - envoie automatique (si réglages LTE) ET régler déjà envoyer afin de ne pas envoyer plusieurs fois le fichier
 
@@ -244,12 +240,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             //Affiche l'état de connexion à l'écran en jaune
                             TextView wifiState = (TextView)findViewById(R.id.wifiState);
-                            wifiState.setText("N/A");
+                            wifiState.setText("LTE / 4G");
                             wifiState.setTextColor(Color.YELLOW);
 
-                            Toast toast = Toast.makeText(getApplicationContext(),
-                                    "Connecté par LTE / 4G", Toast.LENGTH_SHORT);
-                            toast.show();
+                            //Efface le contenu des textview pour ne pas afficher de l'information erroné
+                            TextView nomssid = (TextView)findViewById(R.id.nomSSID);
+                            nomssid.setText("");
+
+                            TextView downState = (TextView)findViewById(R.id.downState);
+                            downState.setText("");
+
+                            TextView conxState = (TextView)findViewById(R.id.serState);
+                            conxState.setText("");
                         }
                     });
 
@@ -257,7 +259,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     for(int i = 0; i < fichiers.length; i++)
                     {
-                        if(i != 0)
+                        if(i != 0 && fichiers[i].getName().charAt(fichiers[i].getName().length() -1) == 'u')
                         {
                             envoieAutomatique(fichiers[i]);
                         }
@@ -280,6 +282,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         TextView wifiState = (TextView)findViewById(R.id.wifiState);
                         wifiState.setText("N/A");
                         wifiState.setTextColor(Color.RED);
+
+                        //Efface le contenu des textview pour ne pas afficher de l'information erroné
+                        TextView nomssid = (TextView)findViewById(R.id.nomSSID);
+                        nomssid.setText("");
+
+                        TextView downState = (TextView)findViewById(R.id.downState);
+                        downState.setText("");
+
+                        TextView conxState = (TextView)findViewById(R.id.serState);
+                        conxState.setText("");
+
 
                         Toast toast = Toast.makeText(getApplicationContext(),
                                 "Aucune connexion détecté.", Toast.LENGTH_SHORT);
@@ -335,28 +348,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         {
             public void run()
             {
-
-                final String adresse = prefs.getString("adresse", "Green Cube 2.4GHz");
-                final String username = prefs.getString("username", "");
-                final String password = prefs.getString("password", "");
-                final String filename = prefs.getString("filename", "");
-                final String Path = prefs.getString("filepath", "");
+                final String adresse = prefs.getString("adresse", "192.168.1.2");
+                final String ssid = prefs.getString("SSID", "Green Cube 2.4GHz");
+                final String username = prefs.getString("username", "administrateur");
+                final String password = prefs.getString("password", "Ubuntu2018");
+                final String filename = prefs.getString("filename", "test.csv");
+                final String Path = prefs.getString("filepath", "/administrateur/home/");
 
                 BufferedInputStream buffIn;
-
-                //TODO - à supprimer
-                Log.d(TAG, "onClick()");
 
                 FTPClient ftp = new FTPClient();
 
                 try
                 {
-
                     //Connexion au server ftp avec le port 21
                     ftp.connect(adresse, 21);
 
                     //TODO - à supprimer
                     Log.d(TAG, "Connected to " + adresse + ".");
+
+                    //TODO - mettre en string les prefs rajouté
 
                     //Login au serveur avec le mot de passe et le nom d'utilisateur
                     ftp.login(username, password);
@@ -394,11 +405,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     if(resultat == true)
                     {
-                        File from = new File(getFilesDir(), "test.csv");
+                        File original = new File(getFilesDir(), "test.csv");
                         //On rajoute la lettre "u" à la fin du fichier pour "unsend", le fichier n'étant pas envoyé.
-                        final File to = new File(getFilesDir(), getDate(timestamp) + "u");
+                        final File renommer = new File(getFilesDir(), getDate(timestamp) + "u");
 
-                        from.renameTo(to);
+                        original.renameTo(renommer);
 
                         runOnUiThread(new Runnable()
                         {
@@ -411,7 +422,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                 //TODO - enlever le u à l'affichage
                                 Toast toast = Toast.makeText(getApplicationContext(),
-                                        "Fichier '" + to.getName() + "' téléchargé avec succès !", Toast.LENGTH_SHORT);
+                                        "Fichier '" + renommer.getName().substring(0, renommer.getName().length() - 1) + "' téléchargé avec succès !", Toast.LENGTH_SHORT);
                                 toast.show();
                             }
                         });
@@ -585,9 +596,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 {
                     protected PasswordAuthentication getPasswordAuthentication()
                     {
-                        return new PasswordAuthentication("boudreault758@gmail.com", "12maze12");
-
-                        //return new PasswordAuthentication(username, password);
+                        return new PasswordAuthentication(username, password);
                     }
                 });
 

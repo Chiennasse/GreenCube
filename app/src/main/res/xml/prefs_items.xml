@@ -6,8 +6,16 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/GreenCubeSSID"
-        android:key="username"
+        android:key="SSID"
         android:summary="@string/GreenCubeSSIDSummary" />
+
+    <EditTextPreference
+        android:defaultValue="administrateur"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Login FTP"
+        android:key="username"
+        android:summary="Giroux"/>
 
     <EditTextPreference
         android:defaultValue="192.168.1.2"
@@ -33,6 +41,7 @@
         android:title="@string/CourrielSourceUsername"
         android:key="sourceUsername"
         android:summary="@string/CourrielSourceUsernameSummary" />
+
     <EditTextPreference
         android:defaultValue="android123"
         android:selectAllOnFocus="true"
@@ -41,6 +50,7 @@
         android:title="@string/CourrielSourcePassword"
         android:key="sourcePassword"
         android:summary="@string/CourrielSourcePasswordSummary" />
+
     <EditTextPreference
         android:defaultValue="testitmi2@gmail.com"
         android:selectAllOnFocus="true"
@@ -49,14 +59,13 @@
         android:key="destinationUsername"
         android:summary="@string/CourrielDestinationUsernameSummary" />
     <EditTextPreference
-        android:defaultValue="test.csv"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/NomFichier"
         android:key="filename"
         android:summary="@string/NomFichierSummary" />
     <EditTextPreference
-        android:defaultValue="/home/"
+        android:defaultValue="/administrateur/home/"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/CheminFichier"
