@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">GreenCube</string>
+    <string name="app_name" translatable="false">GreenCube</string>
     <string name="butt_telecharger">Télécharger les données</string>
     <string name="titleItemPref">Préférences</string>
-    <string name="titileWifi">Wi-Fi</string>
+    <string name="titileWifi" translatable="false">Wi-Fi</string>
     <string name="titleTelechargement">Fichiers</string>
 
 
@@ -17,7 +17,7 @@
     <string name="ServeurPassword">Mot de passe serveur FTP</string>
 
     <string name="Téléchargement">Téléchargement</string>
-    <string name="ConnectionWiFi">Wi-Fi</string>
+    <string name="ConnectionWiFi" translatable="false">Wi-Fi</string>
     <string name="Preference">Préférences</string>
 
     <string name="ParamWifi">Paramètres transfert</string>
@@ -27,7 +27,7 @@
     <string name="ParamLTESummary">Activez ou désactivez le transfert via données mobiles</string>
 
     <string name="CourrielSourceUsername">Courriel source</string>
-    <string name="CourrielSourceUsernameSummary">Entrez le courriel source</string>
+    <string name="CourrielSourceUsernameSummary">Entrez le courriel de l\'expéditeur</string>
 
     <string name="CourrielSourcePassword">Mot de passe courriel source</string>
     <string name="CourrielSourcePasswordSummary">Entrez le mot de passe du courriel source</string>
@@ -36,15 +36,15 @@
     <string name="CourrielDestinationUsernameSummary">Entrez le courriel destination</string>
 
     <string name="NomFichier">Nom fichier</string>
-    <string name="NomFichierSummary">Entrez le nom du fichier</string>
+    <string name="NomFichierSummary">Entrez le nom du fichier sur le serveur FTP à récupéré</string>
 
-    <string name="CheminFichier">Chemin du fichier</string>
-    <string name="CheminFichierSummary">Entrez le chemin vers le fichier</string>
+    <string name="CheminFichier">Emplacement du fichier</string>
+    <string name="CheminFichierSummary">Entrez l\'emplacement du fichier sur le serveur FTP</string>
 
     <string-array name="ValeurSettingWifi">
-        <item>Transfére les données automatiquement en tout temps (Des frais de données peuvent s\'appliquer).</item>
-        <item>Transfére les données automatiquement (uniquement lorsque l\'appareil est connecté à un réseau Wi-Fi).</item>
-        <item>Ne pas transférer les données automatiquement. L\'utilisateur devra procédé au transfert manuellement.</item>
+        <item>a</item>
+        <item>b</item>
+        <item>c</item>
     </string-array>
 
     <string-array name="NomSettingWifi">
@@ -53,25 +53,14 @@
         <item>Ne pas transferer les données automatiquement</item>
     </string-array>
 
-    <string-array name="AutoriserLTE">
-        <item>Autoriser le transfert par LTE</item>
-        <item>Ne pas autoriser le transfert par LTE</item>
-    </string-array>
-
-    <string-array name="ValeurAutoriserLTE">
-        <item>Autoriser le transfert par LTE</item>
-        <item>Ne pas autoriser le transfert par LTE</item>
-    </string-array>
-
-
     <string name="ConxGreenCube">Connexion au réseau du GreenCube...</string>
     <string name="downloadFTP">Téléchargement du fichier... </string>
     <string name="ConxFTP">Connexion au serveur FTP...</string>
     <string name="ConxWifi">État du Wi-Fi...</string>
-    <string name="nomReseau">SSID...</string>
+    <string name="nomReseau" translatable="false">SSID...</string>
 
-    <string name="AcceuilTrue">OK !</string>
-    <string name="AcceuilFalse">Fail !</string>
+    <string name="AcceuilTrue" translatable="false">OK !</string>
+    <string name="AcceuilFalse" translatable="false">Fail !</string>
 
     <string name="MauvaisMDP">Erreur ! Mauvais mot de passe.</string>
     <string name="BonMDP">Mode administrateur activé !</string>

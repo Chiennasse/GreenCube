@@ -41,7 +41,6 @@
         android:title="@string/CourrielSourceUsername"
         android:key="sourceUsername"
         android:summary="@string/CourrielSourceUsernameSummary" />
-
     <EditTextPreference
         android:defaultValue="android123"
         android:selectAllOnFocus="true"
@@ -50,7 +49,6 @@
         android:title="@string/CourrielSourcePassword"
         android:key="sourcePassword"
         android:summary="@string/CourrielSourcePasswordSummary" />
-
     <EditTextPreference
         android:defaultValue="testitmi2@gmail.com"
         android:selectAllOnFocus="true"
@@ -78,15 +76,6 @@
         android:title="@string/ParamWifi"
         android:key="delay"
         android:summary="@string/ParamWifiSummary" />
-
-    <ListPreference
-        android:entries="@array/AutoriserLTE"
-        android:entryValues="@array/ValeurAutoriserLTE"
-        android:defaultValue="30"
-        android:title="@string/ParamLTE"
-        android:key="delay"
-        android:summary="@string/ParamLTESummary" />
-
     <EditTextPreference
         android:defaultValue="admin"
         android:key="adminPassword"

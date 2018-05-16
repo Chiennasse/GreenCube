@@ -104,8 +104,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     SharedPreferences prefs;
 
     private boolean modeAdmin = false;
-    private static final String passwordPrefs = "admin";
-    //TODO - mettre le mot de passe dans le préférences ?
 
     protected boolean envoieAuto = false;
 
@@ -197,30 +195,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         {
                             //Désactive le bouton
                             buttonDownload.setEnabled(false);
-
-                            //TODO - faire l'envoie automatique (si réglages WI-FI seulement) ET régler déjà envoyer afin de ne pas envoyer plusieurs fois le fichier
                             File[] fichiers = getFilesDir().listFiles();
 
-                            envoieAuto = false;
+                            String choixPrefs = prefs.getString("delay", "c");
 
-                            for(int i = 0; i < fichiers.length; i++)
+                            if (choixPrefs.equals("a") || choixPrefs.equals("b"))
                             {
-                                if(i != 0 && fichiers[i].getName().charAt(fichiers[i].getName().length() -1) == 'u')
+                                for(int i = 0; i < fichiers.length; i++)
                                 {
-                                    envoieAutomatique(fichiers[i]);
+                                    if(i != 0 && fichiers[i].getName().charAt(fichiers[i].getName().length() -1) == 'u')
+                                    {
+                                        envoieAutomatique(fichiers[i]);
+                                    }
                                 }
-                            }
-
-                            if (envoieAuto == true)
-                            {
-                                confirmEnvoieAuto();
                             }
                         }
                     }
                     else
                     {
-                        //TODO - Gérer l'envoie selon les paramètres
-
                         runOnUiThread(new Runnable()
                         {
                             @Override
@@ -243,9 +235,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         @Override
                         public void run()
                         {
-
-                            //TODO - envoie automatique (si réglages LTE) ET régler déjà envoyer afin de ne pas envoyer plusieurs fois le fichier
-
                             //Désactive le bouton
                             buttonDownload.setEnabled(false);
 
@@ -265,10 +254,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     });
 
                     File[] fichiers = getFilesDir().listFiles();
+                    String choixPrefs = prefs.getString("delay", "c");
 
-                    // TODO - Ne fonctionne plus depuis l'ajout du if, erreur d'envoie
                     //Valide si l'admin à autorisé le transfert automatique par LTE
-                    if (prefs.getString("delay", "").equals("Autoriser le transfert par LTE")) //TODO : changer les string pour des int, sinon l'anglais va planter
+                    if (choixPrefs.equals("a"))
                     {
                         for(int i = 0; i < fichiers.length; i++)
                         {
@@ -515,7 +504,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             final String mdp =  prefs.getString("adminPassword", "");
                             final String saisie = (userInput.getText().toString());
 
-                            if (saisie.equals(passwordPrefs))
+                            if (saisie.equals(mdp))
                             {
                                 modeAdmin = true;
 

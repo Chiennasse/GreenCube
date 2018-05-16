@@ -55,7 +55,7 @@
     <string name="CourrielDestinationUsername">Destination mail</string>
     <string name="CourrielDestinationUsernameSummary">Enter who will receive the mail</string>
     <string name="NomFichier">Filename</string>
-    <string name="NomFichierSummary">Enter the filename on the FTP server</string>
+    <string name="NomFichierSummary">Enter the filename to get on the FTP server</string>
     <string name="CheminFichier">File path</string>
     <string name="CheminFichierSummary">Enter the file\'s path on the FTP server</string>
     <string name="ConxGreenCube">Connecting to GreenCube\'s network</string>

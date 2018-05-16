@@ -37,6 +37,20 @@ import android.support.v7.widget.Toolbar;
 
 public class PrefsActivity extends AppCompatActivity
 {
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
