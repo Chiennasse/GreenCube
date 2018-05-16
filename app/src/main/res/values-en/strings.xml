@@ -68,4 +68,15 @@
     <string name="MauvaisMDP">Error ! Wrong password.</string>
     <string name="BonMDP">Administrator mode enabled !</string>
     <string name="mailFail">Error while sending email</string>
+    <string name="messageEnvoye">Send</string>
+    <string name="messageNonEnvoye">Not send</string>
+    <string name="ObjetMessage">GreenCube\'s data transfert</string>
+    <string name="MessageConfirmationEnvoie1">Mail sent to</string>
+    <string name="MessageConfirmationEnvoie2">successfully !</string>
+    <string name="MessageErreur">Error while sending email.</string>
+    <string name="PopUpTitre">Deleting</string>
+    <string name="PopUpConfirm">Are you sure you really want to delete this file ?</string>
+    <string name="PopUpTrue">Yes</string>
+    <string name="PopUpFalse">No</string>
+    <string name="PopUpValide">File deleted.</string>
 </resources>

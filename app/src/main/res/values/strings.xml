@@ -76,5 +76,16 @@
     <string name="MauvaisMDP">Erreur ! Mauvais mot de passe.</string>
     <string name="BonMDP">Mode administrateur activé !</string>
 
-    <string name="mailFail">Erreur lors de l'envoie</string>
+    <string name="mailFail">Erreur lors de l\'envoie</string>
+    <string name="messageEnvoye">Envoyé</string>
+    <string name="messageNonEnvoye">Non envoyé</string>
+    <string name="ObjetMessage">Transfert des données du GreenCube</string>
+    <string name="MessageConfirmationEnvoie1">Courriel envoyé à</string>
+    <string name="MessageConfirmationEnvoie2">avec succès !</string>
+    <string name="MessageErreur">Erreur lors de l\'envoi.</string>
+    <string name="PopUpTitre">Suppression</string>
+    <string name="PopUpConfirm">Êtes-vous sûr de bien vouloir supprimer ce fichier ?</string>
+    <string name="PopUpTrue">Oui</string>
+    <string name="PopUpFalse">Non</string>
+    <string name="PopUpValide">Fichier supprimé.</string>
 </resources>

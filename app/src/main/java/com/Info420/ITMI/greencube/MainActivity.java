@@ -253,6 +253,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 envoieAutomatique(fichiers[i]);
                             }
                         }
+
+                        runOnUiThread(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                Toast mailOK = Toast.makeText(getApplicationContext(),
+                                        (getApplicationContext().getString(R.string.MessageConfirmationEnvoie1) + " [" + prefs.getString("destinationUsername","") + "] "
+                                                + (getApplicationContext().getString(R.string.MessageConfirmationEnvoie2))), Toast.LENGTH_SHORT);
+                                mailOK.show();
+                            }
+                        });
                     }
                 }
             }
@@ -554,10 +566,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         //TODO - mettre les infos en préférences
         final String adresse = prefs.getString("adresse", "");
-        final String username = prefs.getString("username", "");
-        final String password = prefs.getString("password", "");
+        final String username = prefs.getString("sourceUsername", "");
+        final String password = prefs.getString("sourcePassword", "");
         final String filename = prefs.getString("filename", "");
         final String Path = prefs.getString("filepath", "");
+        final String usernameDest = prefs.getString("destinationUsername", "");
         final String file = tempo.getName();
 
         new Thread()
@@ -589,12 +602,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Multipart multipart = new MimeMultipart();
 
                     File fichier = new File(getFilesDir(), file);
-                    File fichierNouveau = new File(getFilesDir(), file.substring(0, file.length() - 1));
 
-                    fichier.renameTo(fichierNouveau);
 
-                    String file = "/data/data/com.Info420.ITMI.greencube/files/" + fichierNouveau.getName();
-                    String attachement = fichierNouveau.getName() +".csv";
+
+                    String file = "/data/data/com.Info420.ITMI.greencube/files/" + fichier.getName();
+                    String attachement = fichier.getName().substring(0, fichier.getName().length() - 1) +".csv";
 
                     FileDataSource source = new FileDataSource(file);
                     messageBodyPart.setDataHandler(new DataHandler(source));
@@ -605,11 +617,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     Transport.send(message);
 
-                    //TODO : changer l'adresse affichée dans le toast
+                    File fichierNouveau = new File(getFilesDir(), file.substring(0, file.length() - 1) + "e");
+                    File fichierTempo = new File(getFilesDir(), fichier.getName());
 
-//                    Toast mailOK = Toast.makeText(getApplicationContext(),
-//                            "Courriel envoyé à GIROUX avec succès !", Toast.LENGTH_SHORT);
-//                    mailOK.show();
+
+                    fichierTempo.renameTo(fichierNouveau);
+
+//                    runOnUiThread(new Runnable()
+//                    {
+//                        @Override
+//                        public void run()
+//                        {
+//                            Toast toast = Toast.makeText(getApplicationContext(), fichier.getName(), Toast.LENGTH_SHORT);
+//                            toast.show();
+//                        }
+//                    });
+
                 }
 
                 catch(MessagingException e)

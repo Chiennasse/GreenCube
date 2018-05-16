@@ -1,5 +1,33 @@
+/*
+    Auteurs / Concepteurs :     BOUDREAULT, Alex
+                                CHIASSON, Maxyme    -   www.linkedin.com/in/maxyme-chiasson
+                                LEBLANC, William
+
+    Dernière modification :     16 mai 2018
+
+    Dans le cadre du cours :    420-W63-SI & 420-G64-SI
+    Professeurs :               Guy Toutant - Yves Arsenault
+
+    Projet remis à :            Institut Technologique de Maintenance Industrielle (ITMI)
+
+    Copyright :                 Tous droits réservés. Le produit final est la propriété du Cégep de Sept-Îles,
+                                de l'Institut Technologique de Maintenance Industrielle (ITMI) ainsi que les concepteurs
+                                mentionnés ci-haut. Ceux-ci ont le droit d'alterér, distribuer, reproduire le produit final,
+                                dans un éducatif et de recherche. Pour plus d'informations, veuillez contacter les concepteurs.
+
+    Description :               Fichier contenant les fonctions permettant de s'authentifier
+                                au serveur FTP, de récupérer le fichier de données, le copier sur la
+                                mémoire interne de l'appareil mobile et de fermer la connexion.
+
+    Liens GitHub :              //TODO - push le code sur le nouveau git et mettre l'url
+
+    Note * :                    Notez que le code sur GitHub est affiché de façon publique, donc tout le monde
+                                peut avoir accès au code. Cela est dû au compte gratuit de Git. Il faut débourser un montant
+                                par mois afin de rendre le projet "privé".
+
+*/
+
 package com.Info420.ITMI.greencube;
-//TODO - changer le nom du package
 
 //TODO - commenter l'ensemble du fichier
 
@@ -12,14 +40,11 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,19 +67,9 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-/**
- * Created by boual on 2018-04-18.
- */
-
-//TODO - Faire l'en-tête de fichier
-
-
-//TODO - vérifier les variables non-utilisées
-
 public class Telechargement extends AppCompatActivity
 {
-    //TODO - enlever une fois les logs supprimés
-    private final static String TAG = "Téléchargement";
+    ArrayList<String> nom_partager = new ArrayList<String>();
 
     SharedPreferences prefs;
 
@@ -68,7 +83,7 @@ public class Telechargement extends AppCompatActivity
         myToolbar.setTitle("");
         setSupportActionBar(myToolbar);
 
-        myToolbar.setTitle(R.string.PrefsTitle);
+        myToolbar.setTitle(R.string.titleTelechargement);
         myToolbar.setTitleTextColor(Color.WHITE);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -83,16 +98,16 @@ public class Telechargement extends AppCompatActivity
 
         list_view.setAdapter(adaptateur);
 
+        nom_partager.clear();
+
         for(int i = 0; i < fichiers.length; i++)
         {
             if(i != 0)
             {
                 String tempo = fichiers[i].getName();
+                nom_partager.add(tempo);
 
-                if (tempo.charAt(tempo.length() - 1) == 'u')
-                {
-                    tempo = tempo.substring(0, tempo.length() - 1);
-                }
+                tempo = tempo.substring(0, tempo.length() - 1);
 
                 Nom_Fichier fichier = new Nom_Fichier(tempo);
                 adaptateur.add(fichier);
@@ -128,7 +143,6 @@ public class Telechargement extends AppCompatActivity
 
     private class Fichier_Adapteur extends ArrayAdapter<Nom_Fichier>
     {
-        //TODO - changer le path + mettre en variable global
         static final String pathLocal = "/data/data/com.Info420.ITMI.greencube/files/";
 
         @Override
@@ -146,14 +160,13 @@ public class Telechargement extends AppCompatActivity
 
             txt_fichier.setText(nom_fichier.fichier);
 
-            if(nom_fichier.compteur > 0)
+            if(nom_partager.get(position).charAt(nom_partager.get(position).length() - 1) == 'e')
             {
-                txt_envoie.setText("Envoyé");
-                //TODO - MEttre dans string.xml
+                txt_envoie.setText(getApplicationContext().getString(R.string.messageEnvoye));
             }
-            else
+            else if(nom_partager.get(position).charAt(nom_partager.get(position).length() - 1) == 'u')
             {
-                txt_envoie.setText("Non-Envoyé");
+                txt_envoie.setText(getApplicationContext().getString(R.string.messageNonEnvoye));
             }
 
             Button bouton_email = (Button) convertView.findViewById(R.id.bt_envoyer);
@@ -191,7 +204,7 @@ public class Telechargement extends AppCompatActivity
                             {
                                 Message message = new MimeMessage(session);
                                 message.setRecipient(Message.RecipientType.TO, new InternetAddress(usernameDest));
-                                message.setSubject("Transfert des données du GreenCube fichier : " + txt_fichier.getText());
+                                message.setSubject(getApplicationContext().getString(R.string.ObjetMessage) + "[" + txt_fichier.getText() + "]");
 
                                 MimeBodyPart messageBodyPart = new MimeBodyPart();
                                 Multipart multipart = new MimeMultipart();
@@ -201,18 +214,15 @@ public class Telechargement extends AppCompatActivity
 
                                 if (nom_fichier.compteur < 1)
                                 {
-                                    File fichier = new File(getFilesDir(), nom_fichier.fichier + 'u');
-                                    File fichierNouveau = new File(getFilesDir(), nom_fichier.fichier);
-
-                                    fichier.renameTo(fichierNouveau);
-                                    file = pathLocal + txt_fichier.getText();
-                                    attachement = txt_fichier.getText().toString()+".csv";
+                                    file = pathLocal + txt_fichier.getText() + 'e';
+                                    attachement = txt_fichier.getText() +".csv";
                                     nom_fichier.compteur++;
                                 }
                                 else
                                 {
-                                    file = pathLocal + txt_fichier.getText();
-                                    attachement = txt_fichier.getText().toString()+".csv";
+                                    file = pathLocal + txt_fichier.getText() + "e";
+                                    attachement = txt_fichier.getText() +".csv";
+
                                 }
 
 
@@ -225,7 +235,13 @@ public class Telechargement extends AppCompatActivity
 
                                 Transport.send(message);
 
-                                //TODO : changer l'adresse affichée dans le toast
+                                if (nom_fichier.compteur == 1)
+                                {
+                                    File fichier = new File(getFilesDir(), nom_fichier.fichier + 'u');
+                                    File fichierNouveau = new File(getFilesDir(), nom_fichier.fichier + 'e');
+
+                                    fichier.renameTo(fichierNouveau);
+                                }
 
                                 runOnUiThread(new Runnable()
                                 {
@@ -233,7 +249,8 @@ public class Telechargement extends AppCompatActivity
                                     public void run()
                                     {
                                         Toast mailOK = Toast.makeText(getApplicationContext(),
-                                                "Courriel envoyé à GIROUX avec succès !", Toast.LENGTH_SHORT);
+                                                (getApplicationContext().getString(R.string.MessageConfirmationEnvoie1) + " [" + usernameDest + "] "
+                                                 + (getApplicationContext().getString(R.string.MessageConfirmationEnvoie2))), Toast.LENGTH_SHORT);
                                         mailOK.show();
                                     }
                                 });
@@ -247,7 +264,7 @@ public class Telechargement extends AppCompatActivity
                                     public void run()
                                     {
                                         Toast mailFail = Toast.makeText(getApplicationContext(),
-                                        "Échec de l'envoi.", Toast.LENGTH_SHORT);
+                                        getApplicationContext().getString(R.string.MessageErreur), Toast.LENGTH_SHORT);
                                         mailFail.show();
                                     }
                                 });
@@ -263,18 +280,15 @@ public class Telechargement extends AppCompatActivity
                 @Override
                 public void onClick(View view)
                 {
-                    //TODO - supprimer le log
-                    Log.d(TAG, "Supprimer " + getItem(position).toString());
-
                     AlertDialog.Builder alert = new AlertDialog.Builder(Telechargement.this);
 
-                    alert.setTitle("Supprimer le fichier");
+                    alert.setTitle(getApplicationContext().getString(R.string.PopUpTitre));
 
-                    alert.setMessage("Êtes-vous sûr de vouloir supprimer ce fichier?");
+                    alert.setMessage(getApplicationContext().getString(R.string.PopUpConfirm));
 
                     alert.setCancelable(false);
 
-                    alert.setPositiveButton("Oui", new DialogInterface.OnClickListener()
+                    alert.setPositiveButton(getApplicationContext().getString(R.string.PopUpTrue), new DialogInterface.OnClickListener()
                     {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int l)
@@ -283,9 +297,8 @@ public class Telechargement extends AppCompatActivity
                             fichier_supprimer.delete();
 
                             Toast toast = Toast.makeText(getApplicationContext(),
-                                    "Fichier supprimé.", Toast.LENGTH_SHORT);
+                                    getApplicationContext().getString(R.string.PopUpValide), Toast.LENGTH_SHORT);
                             toast.show();
-
 
                             File[] fichiers = getFilesDir().listFiles();
 
@@ -308,7 +321,7 @@ public class Telechargement extends AppCompatActivity
                         }
                     });
 
-                    alert.setNegativeButton("Non", new DialogInterface.OnClickListener()
+                    alert.setNegativeButton(getApplicationContext().getString(R.string.PopUpFalse), new DialogInterface.OnClickListener()
                     {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i)
