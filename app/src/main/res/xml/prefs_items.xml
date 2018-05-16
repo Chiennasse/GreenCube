@@ -10,20 +10,20 @@
         android:summary="@string/GreenCubeSSIDSummary" />
 
     <EditTextPreference
-        android:defaultValue="administrateur"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="Login FTP"
-        android:key="username"
-        android:summary="Giroux"/>
-
-    <EditTextPreference
         android:defaultValue="192.168.1.2"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/ServeurSSID"
         android:key="adresse"
         android:summary="@string/ServeurSSIDSummary" />
+
+    <EditTextPreference
+        android:defaultValue="administrateur"
+        android:key="username"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="Entrer le nom d'utilisateur du serveur FTP"
+        android:title="Login FTP" />
 
     <EditTextPreference
         android:defaultValue="Ubuntu2018"
@@ -86,5 +86,13 @@
         android:title="@string/ParamLTE"
         android:key="delay"
         android:summary="@string/ParamLTESummary" />
+
+    <EditTextPreference
+        android:defaultValue="admin"
+        android:key="adminPassword"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="@string/adminPassMessage"
+        android:title="@string/adminPassTitre" />
 
 </PreferenceScreen>

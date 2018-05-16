@@ -1,23 +1,43 @@
-
-//TODO : Linker le plus de sources possibles
-
 /*
-    Détecté les changement de Network de l'appareil
-        Source :        https://www.panda-os.com/blog/2014/12/android-device-internet-connection-status/
-        Consulté le :   9 mai 2018
+    Auteurs / Concepteurs :     BOUDREAULT, Alex
+                                CHIASSON, Maxyme    -   www.linkedin.com/in/maxyme-chiasson/
+                                LEBLANC, William    -   www.linkedin.com/in/william-leblanc/
 
-    Update les textview durant le run
-        Source : https://stackoverflow.com/questions/5161951/android-only-the-original-thread-that-created-a-view-hierarchy-can-touch-its-vi
-        Consulté le : 7 mai 2018
+    Dernière modification :     16 mai 2018
 
-    Activé/Désactivé un bouton
-        Source : https://stackoverflow.com/questions/4384890/how-to-disable-an-android-button
-        Consulté le : 9 mai 2018
- */
+    Dans le cadre du cours :    420-W63-SI & 420-G64-SI
+    Professeurs :               Guy Toutant - Yves Arsenault
+
+    Projet remis à :            Institut Technologique de Maintenance Industrielle (ITMI)
+
+    Copyright :                 Tous droits réservés. Le produit final est la propriété du Cégep de Sept-Îles,
+                                de l'Institut Technologique de Maintenance Industrielle (ITMI) ainsi que les concepteurs
+                                mentionnés ci-haut. Ceux-ci ont le droit d'alterér, distribuer, reproduire le produit final,
+                                dans un éducatif et de recherche. Pour plus d'informations, veuillez contacter les concepteurs.
+
+    Description :               Fichier noyau de l'application, dans lequel se retrouve toutes les fonctions de l'appli.
+
+                                Lorsque l'usager lance l'application, l'écran principale s'affiche, contenant des informations
+                                sur l'état de l'application et du GreenCube (s'il l'appareil est connecté au réseau sans-fil
+                                du GreenCube) et un bouton permettant de télécharger les données à partir de l'ordinateur emmbarqué
+                                du GreenCube.
+
+                                Pour comprendre le fonctionnement et avoir une meilleure compréhension de l'appareil GreenCube,
+                                pensez à consulter le guide d'utilisateur officiel sur Git.
+
+    Liens GitHub :              //TODO - push le code sur le nouveau git et mettre l'url
+
+    Note * :                    Notez que le code sur GitHub est affiché de façon publique, donc tout le monde
+                                peut avoir accès au code. Cela est dû au compte gratuit de Git. Il faut débourser un montant
+                                par mois afin de rendre le projet "privé".
+
+*/
+
+
+
 
 package com.Info420.ITMI.greencube;
 
-//TODO - Faire l'en-tête de fichier
 
 //TODO - Commenter l'ensemble du fichier
 
@@ -84,7 +104,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     SharedPreferences prefs;
 
     private boolean modeAdmin = false;
-    private static final String passwordPrefs = "adminPrefs";
+    private static final String passwordPrefs = "admin";
+    //TODO - mettre le mot de passe dans le préférences ?
 
     protected boolean envoieAuto = false;
 
@@ -97,7 +118,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         registerReceiver(WifiStateChangedReceiver, intentFilter);
     }
 
-    //TODO - Comprendre
     @Override
     protected void onDestroy()
     {
@@ -145,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         {
                             //Affiche l'état de connexion à l'écran en vert
                             TextView wifiState = (TextView)findViewById(R.id.wifiState);
-                            wifiState.setText("actif");
+                            wifiState.setText(getApplicationContext().getString(R.string.wifiState));
                             wifiState.setTextColor(Color.GREEN);
                         }
                     });
@@ -206,9 +226,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             @Override
                             public void run()
                             {
-                                //Affiche le SSID du réseau comme étant inconnu, en jaune
+                                //Affiche le SSID du réseau comme étant invalide, en jaune
                                 TextView nomssid = (TextView)findViewById(R.id.nomSSID);
-                                nomssid.setText("Invalide");
+                                nomssid.setText(getApplicationContext().getString(R.string.wifiInvalide));
                                 nomssid.setTextColor(Color.YELLOW);
                             }
                         });
@@ -226,8 +246,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             //TODO - envoie automatique (si réglages LTE) ET régler déjà envoyer afin de ne pas envoyer plusieurs fois le fichier
 
-                            //TODO - traduire les toast
-
                             //Désactive le bouton
                             buttonDownload.setEnabled(false);
 
@@ -239,10 +257,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             //Efface le contenu des textview pour ne pas afficher de l'information erroné
                             TextView nomssid = (TextView)findViewById(R.id.nomSSID);
                             nomssid.setText("");
-
                             TextView downState = (TextView)findViewById(R.id.downState);
                             downState.setText("");
-
                             TextView conxState = (TextView)findViewById(R.id.serState);
                             conxState.setText("");
                         }
@@ -252,12 +268,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     // TODO - Ne fonctionne plus depuis l'ajout du if, erreur d'envoie
                     //Valide si l'admin à autorisé le transfert automatique par LTE
-                    if (prefs.getString("delay", "").equals("Autoriser le transfert par LTE"))
+                    if (prefs.getString("delay", "").equals("Autoriser le transfert par LTE")) //TODO : changer les string pour des int, sinon l'anglais va planter
                     {
                         for(int i = 0; i < fichiers.length; i++)
                         {
                             if(i != 0 && fichiers[i].getName().charAt(fichiers[i].getName().length() -1) == 'u')
                             {
+                                //Appel de la fonction d'envoie automatique
                                 envoieAutomatique(fichiers[i]);
                             }
                         }
@@ -268,6 +285,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //Aucune connexion détecté, autant par Wi-Fi que par données mobiles.
             else
             {
+                //Ouvre un thread
                 runOnUiThread(new Runnable()
                 {
                     @Override
@@ -284,16 +302,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         //Efface le contenu des textview pour ne pas afficher de l'information erroné
                         TextView nomssid = (TextView)findViewById(R.id.nomSSID);
                         nomssid.setText("");
-
                         TextView downState = (TextView)findViewById(R.id.downState);
                         downState.setText("");
-
                         TextView conxState = (TextView)findViewById(R.id.serState);
                         conxState.setText("");
 
-
+                        //Affiche un message à l'usager indiquant qu'aucune connexion n'a été détectée
                         Toast toast = Toast.makeText(getApplicationContext(),
-                                "Aucune connexion détecté.", Toast.LENGTH_SHORT);
+                                (getApplicationContext().getString(R.string.NoConnection)), Toast.LENGTH_SHORT);
                         toast.show();
                     }
                 });
@@ -328,7 +344,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public String getDate(String timestamp)
     {
-        DateFormat date = new SimpleDateFormat("yyyy.MM.dd " + "HH:mm:ss");
+        DateFormat date = new SimpleDateFormat("yyyy.MM.dd " + "HH:mm:ss"); //TODO - changer le format ?
 
         Date chaine_date = (new Date(Long.parseLong(timestamp)));
 
@@ -362,8 +378,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     //Connexion au server ftp avec le port 21
                     ftp.connect(adresse, 21);
 
-                    //TODO - mettre en string les prefs rajouté
-
                     //Login au serveur avec le mot de passe et le nom d'utilisateur
                     ftp.login(username, password);
 
@@ -393,7 +407,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     if(resultat == true)
                     {
-                        File original = new File(getFilesDir(), "test.csv");
+                        File original = new File(getFilesDir(), prefs.getString("filename", ""));
                         //On rajoute la lettre "u" à la fin du fichier pour "unsend", le fichier n'étant pas envoyé.
                         final File renommer = new File(getFilesDir(), getDate(timestamp) + "u");
 
@@ -408,9 +422,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 downState.setText("OK !");
                                 downState.setTextColor(Color.GREEN);
 
-                                //TODO - enlever le u à l'affichage
+                                //Affiche à l'usager un message indiquant que le fichier est bel et bien télécharger, en lui indiquant le nom du fichier en question
                                 Toast toast = Toast.makeText(getApplicationContext(),
-                                        "Fichier '" + renommer.getName().substring(0, renommer.getName().length() - 1) + "' téléchargé avec succès !", Toast.LENGTH_SHORT);
+                                        (getApplicationContext().getString(R.string.MessageTelecharger1)) +
+                                                " ['" + renommer.getName().substring(0, renommer.getName().length() - 1) + "']" +
+                                                (getApplicationContext().getString(R.string.MessageTelecharger2)), Toast.LENGTH_SHORT);
                                 toast.show();
                             }
                         });
@@ -428,7 +444,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 downState.setTextColor(Color.RED);
 
                                 Toast toast = Toast.makeText(getApplicationContext(),
-                                        "Erreur lors du téléchargement du fichier.", Toast.LENGTH_SHORT);
+                                        getApplicationContext().getString(R.string.ErrorDownload), Toast.LENGTH_SHORT);
                                 toast.show();
                             }
                         });
@@ -456,7 +472,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 catch (IOException e)
                 {
-                    //TODO - gèrer l'erreur de téléchargement de fichier
                     e.printStackTrace();
                 }
             }
@@ -486,13 +501,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 {
                     View view = (LayoutInflater.from(MainActivity.this)).inflate(R.layout.user_input, null);
 
-                    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this).setMessage("Saisissez le mot de passe:");
+                    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this).setMessage(getApplicationContext().getString(R.string.MessageMDP));
                     alertBuilder.setView(view);
                     final EditText userInput = (EditText) view.findViewById(R.id.userinput);
                     userInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-
-
-                    // TODO : https://stackoverflow.com/questions/5105354/how-to-show-soft-keyboard-when-edittext-is-focused
 
                     alertBuilder.setCancelable(true).setPositiveButton("Ok", new DialogInterface.OnClickListener()
                     {
@@ -500,6 +512,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         @Override
                         public void onClick(DialogInterface dialog, int which)
                         {
+                            final String mdp =  prefs.getString("adminPassword", "");
                             final String saisie = (userInput.getText().toString());
 
                             if (saisie.equals(passwordPrefs))
@@ -511,8 +524,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     @Override
                                     public void run()
                                     {
-                                        // TODO - changer l'ensemble des toast pour celui-ci
-                                        // TODO - Source : https://stackoverflow.com/questions/7331793/android-java-using-a-string-resource-in-a-toast
                                         Toast toast = Toast.makeText(getApplicationContext(),
                                                 getApplicationContext().getString(R.string.BonMDP), Toast.LENGTH_SHORT);
                                         toast.show();
@@ -528,8 +539,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     @Override
                                     public void run()
                                     {
-                                        // TODO - changer l'ensemble des toast pour celui-ci
-                                        // TODO - Source : https://stackoverflow.com/questions/7331793/android-java-using-a-string-resource-in-a-toast
+                                        //TODO - TOAST MODÈLE
                                         Toast toast = Toast.makeText(getApplicationContext(),
                                                 getApplicationContext().getString(R.string.MauvaisMDP), Toast.LENGTH_SHORT);
                                         toast.show();
@@ -542,8 +552,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Dialog dialog = alertBuilder.create();
                     dialog.show();
                 }
-
-
 
                 if (modeAdmin == true)
                 {
@@ -564,7 +572,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void envoieAutomatique(File tempo)
     {
-        //TODO - mettre les infos en préférences
         final String adresse = prefs.getString("adresse", "");
         final String username = prefs.getString("sourceUsername", "");
         final String password = prefs.getString("sourcePassword", "");
@@ -596,13 +603,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 {
                     Message message = new MimeMessage(session);
                     message.setRecipient(Message.RecipientType.TO, new InternetAddress("testitmi2@gmail.com"));
-                    message.setSubject("Transfert des données du GreenCube [" + filename + "]");
+                    message.setSubject((getApplicationContext().getString(R.string.ObjetMessage)) + " [" + filename + "]");
 
                     MimeBodyPart messageBodyPart = new MimeBodyPart();
                     Multipart multipart = new MimeMultipart();
 
                     File fichier = new File(getFilesDir(), file);
-
 
 
                     String file = "/data/data/com.Info420.ITMI.greencube/files/" + fichier.getName();
@@ -623,17 +629,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     File fichierNouveau = new File(getFilesDir(), fichier.getName().substring(0, fichier.getName().length() - 1) + "e");
 
                     fichier.renameTo(fichierNouveau);
-
-//                    runOnUiThread(new Runnable()
-//                    {
-//                        @Override
-//                        public void run()
-//                        {
-//                            Toast toast = Toast.makeText(getApplicationContext(), fichier.getName(), Toast.LENGTH_SHORT);
-//                            toast.show();
-//                        }
-//                    });
-
                 }
 
                 catch(MessagingException e)

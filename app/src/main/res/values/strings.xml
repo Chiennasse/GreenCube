@@ -88,4 +88,13 @@
     <string name="PopUpTrue">Oui</string>
     <string name="PopUpFalse">Non</string>
     <string name="PopUpValide">Fichier supprimé.</string>
+    <string name="NoConnection">Aucune connexion détectée.</string>
+    <string name="wifiState">actif</string>
+    <string name="wifiInvalide">Invalide</string>
+    <string name="MessageTelecharger1">Fichier</string>
+    <string name="MessageTelecharger2">téléchargé avec succès !</string>
+    <string name="ErrorDownload">Erreur lors du téléchargement du fichier.</string>
+    <string name="MessageMDP">Saissisez le mot de passe</string>
+    <string name="adminPassTitre">Mot de passe</string>
+    <string name="adminPassMessage">Changer le mot de passe administrateur</string>
 </resources>

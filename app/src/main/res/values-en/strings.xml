@@ -79,4 +79,13 @@
     <string name="PopUpTrue">Yes</string>
     <string name="PopUpFalse">No</string>
     <string name="PopUpValide">File deleted.</string>
+    <string name="NoConnection">No connection detected.</string>
+    <string name="wifiState">active</string>
+    <string name="wifiInvalide">Invalid</string>
+    <string name="MessageTelecharger1">File</string>
+    <string name="MessageTelecharger2">downloaded successfully !</string>
+    <string name="ErrorDownload">Error while downloading the data.</string>
+    <string name="MessageMDP">Enter the admin password</string>
+    <string name="adminPassTitre">Password</string>
+    <string name="adminPassMessage">Change admintrator\'s password</string>
 </resources>
