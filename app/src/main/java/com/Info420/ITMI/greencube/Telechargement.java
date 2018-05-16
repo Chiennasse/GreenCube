@@ -1,7 +1,7 @@
 /*
     Auteurs / Concepteurs :     BOUDREAULT, Alex
-                                CHIASSON, Maxyme    -   www.linkedin.com/in/maxyme-chiasson
-                                LEBLANC, William
+                                CHIASSON, Maxyme    -   www.linkedin.com/in/maxyme-chiasson/
+                                LEBLANC, William    -   www.linkedin.com/in/william-leblanc/
 
     Dernière modification :     16 mai 2018
 
@@ -252,6 +252,8 @@ public class Telechargement extends AppCompatActivity
                                                 (getApplicationContext().getString(R.string.MessageConfirmationEnvoie1) + " [" + usernameDest + "] "
                                                  + (getApplicationContext().getString(R.string.MessageConfirmationEnvoie2))), Toast.LENGTH_SHORT);
                                         mailOK.show();
+
+                                        txt_envoie.setText(getApplicationContext().getString(R.string.messageEnvoye));
                                     }
                                 });
                             }

@@ -34,7 +34,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -86,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private boolean modeAdmin = false;
     private static final String passwordPrefs = "adminPrefs";
+
+    protected boolean envoieAuto = false;
 
     @Override
     protected void onStart()
@@ -180,12 +181,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             //TODO - faire l'envoie automatique (si réglages WI-FI seulement) ET régler déjà envoyer afin de ne pas envoyer plusieurs fois le fichier
                             File[] fichiers = getFilesDir().listFiles();
 
+                            envoieAuto = false;
+
                             for(int i = 0; i < fichiers.length; i++)
                             {
                                 if(i != 0 && fichiers[i].getName().charAt(fichiers[i].getName().length() -1) == 'u')
                                 {
                                     envoieAutomatique(fichiers[i]);
                                 }
+                            }
+
+                            if (envoieAuto == true)
+                            {
+                                confirmEnvoieAuto();
                             }
                         }
                     }
@@ -253,18 +261,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 envoieAutomatique(fichiers[i]);
                             }
                         }
-
-                        runOnUiThread(new Runnable()
-                        {
-                            @Override
-                            public void run()
-                            {
-                                Toast mailOK = Toast.makeText(getApplicationContext(),
-                                        (getApplicationContext().getString(R.string.MessageConfirmationEnvoie1) + " [" + prefs.getString("destinationUsername","") + "] "
-                                                + (getApplicationContext().getString(R.string.MessageConfirmationEnvoie2))), Toast.LENGTH_SHORT);
-                                mailOK.show();
-                            }
-                        });
                     }
                 }
             }
@@ -482,6 +478,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final Intent intentPrefsActivity = new Intent(this, PrefsActivity.class);
         Intent intentTelechargementActivity = new Intent(this, Telechargement.class);
 
+
         switch (item.getItemId())
         {
             case R.id.itemPreference:
@@ -494,6 +491,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     final EditText userInput = (EditText) view.findViewById(R.id.userinput);
                     userInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
+
                     // TODO : https://stackoverflow.com/questions/5105354/how-to-show-soft-keyboard-when-edittext-is-focused
 
                     alertBuilder.setCancelable(true).setPositiveButton("Ok", new DialogInterface.OnClickListener()
@@ -502,7 +500,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         @Override
                         public void onClick(DialogInterface dialog, int which)
                         {
-                            String saisie = (userInput.getText().toString());
+                            final String saisie = (userInput.getText().toString());
 
                             if (saisie.equals(passwordPrefs))
                             {
@@ -544,6 +542,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Dialog dialog = alertBuilder.create();
                     dialog.show();
                 }
+
+
 
                 if (modeAdmin == true)
                 {
@@ -617,11 +617,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     Transport.send(message);
 
-                    File fichierNouveau = new File(getFilesDir(), file.substring(0, file.length() - 1) + "e");
-                    File fichierTempo = new File(getFilesDir(), fichier.getName());
+                    envoieAuto = true;
+                    //TODO - GROSSE MARDE
 
+                    File fichierNouveau = new File(getFilesDir(), fichier.getName().substring(0, fichier.getName().length() - 1) + "e");
 
-                    fichierTempo.renameTo(fichierNouveau);
+                    fichier.renameTo(fichierNouveau);
 
 //                    runOnUiThread(new Runnable()
 //                    {
@@ -651,5 +652,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         }.start();
+    }
+
+    private void confirmEnvoieAuto()
+    {
+        runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                Toast mailOK = Toast.makeText(getApplicationContext(),
+                        (getApplicationContext().getString(R.string.MessageConfirmationEnvoie1) + " [" + prefs.getString("destinationUsername","") + "] "
+                                + (getApplicationContext().getString(R.string.MessageConfirmationEnvoie2))), Toast.LENGTH_SHORT);
+                mailOK.show();
+            }
+        });
     }
 }
