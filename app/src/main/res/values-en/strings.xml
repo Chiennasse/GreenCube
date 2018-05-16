@@ -2,30 +2,30 @@
     <string name="app_name">GreenCube</string>
     <string name="butt_telecharger">Download data</string>
     <string name="titleItemPref">Preferences</string>
-    <string name="titileWifi">Wifi</string>
+    <string name="titileWifi">WI-FI</string>
     <string name="titleTelechargement">Downloads</string>
 
 
 
-    <string name="PrefsTitle">PreferencesITMI</string>
+    <string name="PrefsTitle">Preferences</string>
 
-    <string name="GreenCubeSSIDSummary">Enter the name of the network of the GreenCube</string>
+    <string name="GreenCubeSSIDSummary">Enter SSID for GreenCube\'s network</string>
     <string name="GreenCubeSSID">GreenCube Network</string>
 
-    <string name="ServeurSSIDSummary">Enter the address of the FTP server</string>
-    <string name="ServerPasswordSummary">Enter the password of the network of the server</string>
-    <string name="ServeurSSID">Server address</string>
-    <string name="ServeurPassword">Server password</string>
+    <string name="ServeurSSIDSummary">Enter the IP address for the FTP server</string>
+    <string name="ServerPasswordSummary">Enter FTP server\'s password</string>
+    <string name="ServeurSSID">FTP server\'s address</string>
+    <string name="ServeurPassword">FTP password</string>
 
     <string name="Téléchargement">Downloads</string>
-    <string name="ConnectionWiFi">WiFi</string>
+    <string name="ConnectionWiFi">Wi-Fi</string>
     <string name="Preference">Preference</string>
 
     <string name="ParamWifi">Transfer parameters</string>
-    <string name="ParamWifiSummary">Choose the parameters of the automatic transfer</string>
+    <string name="ParamWifiSummary">Configure the automatic transfert</string>
 
     <string name="ParamLTE">LTE parameters</string>
-    <string name="ParamLTESummary">Activate or desactivate transfer by LTE</string>
+    <string name="ParamLTESummary">Enable / Disable LTE  transfer</string>
 
     <string-array name="NomSettingWifi">
         <item>Transfer data automaticly at all time. Data charges may apply</item>
@@ -48,4 +48,24 @@
         <item>Allow transfer by LTE</item>
         <item>Do not allow transfer by LTE</item>
     </string-array>
+    <string name="CourrielSourceUsername">Source</string>
+    <string name="CourrielSourceUsernameSummary">Enter the sender\'s email</string>
+    <string name="CourrielSourcePassword">Source\'s password</string>
+    <string name="CourrielSourcePasswordSummary">Enter sender\'s mail password</string>
+    <string name="CourrielDestinationUsername">Destination mail</string>
+    <string name="CourrielDestinationUsernameSummary">Enter who will receive the mail</string>
+    <string name="NomFichier">Filename</string>
+    <string name="NomFichierSummary">Enter the filename on the FTP server</string>
+    <string name="CheminFichier">File path</string>
+    <string name="CheminFichierSummary">Enter the file\'s path on the FTP server</string>
+    <string name="ConxGreenCube">Connecting to GreenCube\'s network</string>
+    <string name="downloadFTP">Dowloading data...</string>
+    <string name="ConxFTP">Connecting to FTP server...</string>
+    <string name="ConxWifi">Wi-Fi state...</string>
+    <string name="nomReseau">SSID...</string>
+    <string name="AcceuilTrue">OK !</string>
+    <string name="AcceuilFalse">Fail !</string>
+    <string name="MauvaisMDP">Error ! Wrong password.</string>
+    <string name="BonMDP">Administrator mode enabled !</string>
+    <string name="mailFail">Error while sending email</string>
 </resources>

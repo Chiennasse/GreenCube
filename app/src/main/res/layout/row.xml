@@ -6,20 +6,22 @@
     <Button
         android:id="@+id/bt_delete"
         style="@style/Widget.AppCompat.Button"
-        android:layout_width="54dp"
-        android:layout_height="wrap_content"
+        android:layout_width="28dp"
+        android:layout_height="27dp"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/poubelle3" />
+        android:layout_marginEnd="33dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/poubelle2" />
 
     <Button
         android:id="@+id/bt_envoyer"
-        android:layout_width="49dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/bt_delete"
-        android:background="@drawable/email3" />
+        android:layout_width="37dp"
+        android:layout_height="22dp"
+        android:layout_alignBottom="@+id/bt_delete"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="76dp"
+        android:background="@drawable/email" />
 
     <TextView
         android:text="TextView"
@@ -36,6 +38,7 @@
         android:layout_width="97dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/nom_telechargement" />
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="28dp" />
 
 </RelativeLayout>

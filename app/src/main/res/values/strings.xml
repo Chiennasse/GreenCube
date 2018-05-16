@@ -23,7 +23,7 @@
     <string name="ParamWifi">Paramètres transfert</string>
     <string name="ParamWifiSummary">Choissisez les paramètres de transfert automatique</string>
 
-    <string name="ParamLTE">Paramètre LTE</string>
+    <string name="ParamLTE">Paramètres LTE</string>
     <string name="ParamLTESummary">Activez ou désactivez le transfert via données mobiles</string>
 
     <string name="CourrielSourceUsername">Courriel source</string>
@@ -76,5 +76,5 @@
     <string name="MauvaisMDP">Erreur ! Mauvais mot de passe.</string>
     <string name="BonMDP">Mode administrateur activé !</string>
 
-    <string name="envoieView"></string>
+    <string name="mailFail">Erreur lors de l'envoie</string>
 </resources>
