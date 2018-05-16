@@ -1,6 +1,5 @@
 package com.Info420.ITMI.greencube;
 
-//TODO - changer le nom du package
 
 //TODO - commenter l'ensemble du fichier
 
