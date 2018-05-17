@@ -59,6 +59,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -201,12 +202,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             if (choixPrefs.equals("a") || choixPrefs.equals("b"))
                             {
+                                boolean confirmEnvoie = false;
+
                                 for(int i = 0; i < fichiers.length; i++)
                                 {
                                     if(i != 0 && fichiers[i].getName().charAt(fichiers[i].getName().length() -1) == 'u')
                                     {
+                                        //Appel de la fonction d'envoie automatique
                                         envoieAutomatique(fichiers[i]);
+                                        confirmEnvoie = true;
                                     }
+                                }
+
+                                if (confirmEnvoie)
+                                {
+                                    runOnUiThread(new Runnable()
+                                    {
+                                        @Override
+                                        public void run()
+                                        {
+                                            Toast message = Toast.makeText(getApplicationContext(), (getApplicationContext().getString(R.string.MessageConfirmationEnvoie1) +
+                                                    " [" + prefs.getString("destinationUsername", "")) + "] " +
+                                                    (getApplicationContext().getString(R.string.MessageConfirmationEnvoie2)), Toast.LENGTH_SHORT );
+                                        }
+                                    });
                                 }
                             }
                         }
@@ -259,13 +278,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     //Valide si l'admin à autorisé le transfert automatique par LTE
                     if (choixPrefs.equals("a"))
                     {
+                        boolean confirmEnvoie = false;
+
                         for(int i = 0; i < fichiers.length; i++)
                         {
                             if(i != 0 && fichiers[i].getName().charAt(fichiers[i].getName().length() -1) == 'u')
                             {
                                 //Appel de la fonction d'envoie automatique
                                 envoieAutomatique(fichiers[i]);
+                                confirmEnvoie = true;
                             }
+                        }
+
+                        if (confirmEnvoie)
+                        {
+                            runOnUiThread(new Runnable()
+                            {
+                                @Override
+                                public void run()
+                                {
+                                    Toast message = Toast.makeText(getApplicationContext(), (getApplicationContext().getString(R.string.MessageConfirmationEnvoie1) +
+                                            " [" + prefs.getString("destinationUsername", "")) + "] " +
+                                            (getApplicationContext().getString(R.string.MessageConfirmationEnvoie2)), Toast.LENGTH_SHORT );
+                                    message.show();
+                                }
+                            });
                         }
                     }
                 }
@@ -414,7 +451,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 //Affiche à l'usager un message indiquant que le fichier est bel et bien télécharger, en lui indiquant le nom du fichier en question
                                 Toast toast = Toast.makeText(getApplicationContext(),
                                         (getApplicationContext().getString(R.string.MessageTelecharger1)) +
-                                                " ['" + renommer.getName().substring(0, renommer.getName().length() - 1) + "']" +
+                                                " ['" + renommer.getName().substring(0, renommer.getName().length() - 1) + "'] " +
                                                 (getApplicationContext().getString(R.string.MessageTelecharger2)), Toast.LENGTH_SHORT);
                                 toast.show();
                             }
@@ -539,6 +576,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     });
 
                     Dialog dialog = alertBuilder.create();
+                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                     dialog.show();
                 }
 
@@ -592,7 +630,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 {
                     Message message = new MimeMessage(session);
                     message.setRecipient(Message.RecipientType.TO, new InternetAddress("testitmi2@gmail.com"));
-                    message.setSubject((getApplicationContext().getString(R.string.ObjetMessage)) + " [" + filename + "]");
+                    message.setSubject((getApplicationContext().getString(R.string.ObjetMessage)) + " [" + file.substring(0, file.length() - 1) + "]");
 
                     MimeBodyPart messageBodyPart = new MimeBodyPart();
                     Multipart multipart = new MimeMultipart();

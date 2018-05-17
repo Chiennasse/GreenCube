@@ -295,7 +295,7 @@ public class Telechargement extends AppCompatActivity
                         @Override
                         public void onClick(DialogInterface dialogInterface, int l)
                         {
-                            File fichier_supprimer = new File(getFilesDir(), txt_fichier.getText().toString());
+                            File fichier_supprimer = new File(getFilesDir(), nom_partager.get(position));
                             fichier_supprimer.delete();
 
                             Toast toast = Toast.makeText(getApplicationContext(),
@@ -312,11 +312,18 @@ public class Telechargement extends AppCompatActivity
 
                             list_view.setAdapter(adaptateur);
 
+                            nom_partager.clear();
+
                             for(int i = 0; i < fichiers.length; i++)
                             {
                                 if(i != 0)
                                 {
-                                    Nom_Fichier fichier = new Nom_Fichier(fichiers[i].getName());
+                                    String tempo = fichiers[i].getName();
+                                    nom_partager.add(tempo);
+
+                                    tempo = tempo.substring(0, tempo.length() - 1);
+
+                                    Nom_Fichier fichier = new Nom_Fichier(tempo);
                                     adaptateur.add(fichier);
                                 }
                             }
